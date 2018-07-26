@@ -39,9 +39,5 @@ package body Stack is
     procedure Reset is
     begin
         Top := 1;
-    end Reset;  
-    
--- initialization 
-begin
-    Reset;
+    end Reset;
 end Stack;

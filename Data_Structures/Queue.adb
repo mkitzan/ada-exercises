@@ -5,8 +5,9 @@
 package body Queue is
     -- hidden attributes
     type Generic_Array is array (Positive range 1 .. Length) of T;
-    Buffer : Generic_Array;
-    Next_In, Next_Out : Integer;
+    Buffer   : Generic_Array;
+    Next_In  : Integer := 1;
+    Next_Out : Integer := 1;
 
     -- operation bodies
     procedure Enqueue (Value : in T) is
@@ -41,8 +42,4 @@ package body Queue is
         Next_In  := 1;
         Next_Out := 1;
     end Reset;
-
--- initialization 
-begin
-    Reset;
 end Queue;
