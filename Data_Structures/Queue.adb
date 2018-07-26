@@ -31,12 +31,18 @@ package body Queue is
         return Temp;
     end Dequeue;
     
+    function Is_Empty return Boolean is
+    begin
+        return Next_Out = Next_In;
+    end Is_Empty;
+    
     procedure Reset is
     begin
         Next_In  := 1;
         Next_Out := 1;
     end Reset;
 
+-- initialization 
 begin
     Reset;
 end Queue;

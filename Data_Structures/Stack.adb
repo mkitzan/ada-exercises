@@ -40,6 +40,8 @@ package body Stack is
     begin
         Top := 1;
     end Reset;  
+    
+-- initialization 
 begin
     Reset;
 end Stack;

@@ -11,8 +11,8 @@ package Stack is
     Underflow_Exception, Overflow_Exception : exception;
 
     -- operation specs
-    procedure Push (Item : in  T); -- raises Overflow_Exception
-    function  Pop  return T; -- raises Underflow_Exception
+    procedure Push     (Item : in  T); -- raises Overflow_Exception
+    function  Pop      return T; -- raises Underflow_Exception
     function  Is_Empty return Boolean;
     procedure Reset;
 end Stack;
