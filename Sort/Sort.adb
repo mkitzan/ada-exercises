@@ -4,8 +4,8 @@
 
 with Stack;
 
-package body Quick_Sort is
-    procedure Sort (Unsorted : in out T_Array) is
+package body Sort is
+    procedure Quick (Unsorted : in out T_Array) is
         Split : Integer;
         Lower : Integer := Unsorted'First;
         Upper : Integer := Unsorted'Last;
@@ -30,7 +30,26 @@ package body Quick_Sort is
                 T_Stack.Push(Upper);
             end if;
         end loop;
-    end Sort;
+    end Quick;
+    
+    procedure Insertion (Unsorted : in out T_Array) is
+        Key : T;
+        Probe : Integer;
+    begin
+        for I in Unsorted'First + 1 .. Unsorted'Last
+        loop
+            Key := Unsorted(I);
+            Probe := I - 1;
+            
+            while Probe /= 0 and Compare(Key, Unsorted(Probe))
+            loop
+                Unsorted(Probe + 1) := Unsorted(Probe);
+                Probe := Probe - 1;
+            end loop;
+            
+            Unsorted(Probe + 1) := Key;
+        end loop;
+    end Insertion;
 
     procedure Swap (Item_A, Item_B : in out T) is
         Temp : constant T := Item_A;
@@ -54,4 +73,4 @@ package body Quick_Sort is
         Swap(Unsorted(Bound), Unsorted(Upper));
         return Bound;
     end Partition;
-end Quick_Sort;
+end Sort;
