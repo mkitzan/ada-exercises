@@ -5,7 +5,7 @@
 generic
     -- arguments for package instantiation
     type T is private;
-    type T_Array is array (Positive range <>) of T;
+    type T_Array is array (Integer range <>) of T;
     with function Compare (Left, Right : in T) return Boolean;
 package Sort is
     -- operation specs

@@ -1,8 +1,8 @@
 with Ada.Text_IO,Sort; use Ada.Text_IO;
 
 procedure Sort_Test is
-    -- Array type for QSort MUST BE indefinite range
-    type Char_Array is array (Positive range <>) of Character;
+    -- Array type for QSort MUST BE indefinite range w/ Integer range
+    type Char_Array is array (Integer range <>) of Character;
     
     -- Compare function for the generic's type
     function Char_Compare (Char_1, Char_2 : in Character) return Boolean is
