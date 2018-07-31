@@ -6,12 +6,18 @@ generic
     Fault_Filter : in Float;
     with procedure Operation(Component : in out Module);
 package Module.Group is
-    procedure Run;
-    procedure Status;
-    procedure Listen;
+    Outputs : Float_Array (1 .. Module_Group'Length); -- group outputs
+
+    procedure Init_Group; -- initialize modules in group and group outputs
     
-    procedure Bind_From (To : out Float_Array);
-    procedure Bind_To   (From : in Float_Array; Position : in Positive);
+    procedure Run;    -- performs "Operation" on every module in group
+    procedure Status; -- prints faulty status of each module (true = Faulty)
+    procedure Listen; -- prints current output value in group
+    
+    -- binding routines "From" value/s bound to group inputs
+    procedure Bind_Single (From : in Float_Access; Position : in Positive);
+    procedure Bind_Array  (From : in Float_Array;  Position : in Positive);
+    procedure Bind_Multi  (From : in Float_Array;  Position : in Positive);
 private
     procedure Fault_Component (Component : in out Module);
     G : Generator;

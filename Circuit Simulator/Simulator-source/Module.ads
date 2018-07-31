@@ -12,5 +12,4 @@ package Module is
     type Module_Array is array (Positive range <>) of Module;
     
     procedure Init_Module (Component  : in out Module);
-    procedure Init_Array  (Components : in out Module_Array);
 end Module;

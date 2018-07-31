@@ -10,12 +10,13 @@ package body Simulator is
             Status;
         end loop;
     end Run_Simulator;
-
+    
     procedure Generate_All is
     begin
         for Input of System_Inputs
         loop
-            Input.all := Input_Generator;
+            Input.all := Input_Range(Random(G));
+            Reset(G);
         end loop;
     end Generate_All;
 end Simulator;

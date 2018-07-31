@@ -7,7 +7,7 @@
 --
 
 
-with Ada.Text_IO, Ada.Numerics.Discrete_Random; use Ada.Text_IO;
+with Ada.Text_IO; use Ada.Text_IO;
 -- simulator with/use calls (this exact line must be present for to use the simulator)
 with Units, Simulator, Module, Module.Group; use Units;
 
@@ -23,7 +23,7 @@ procedure NMR_Simulator is
 
     -- base module packages
     package Processor is new Module(Inputs => Proc_Inputs);
-    package Voter    is new Module(Inputs => Voter_Inputs);
+    package Voter     is new Module(Inputs => Voter_Inputs);
     Proc_Array  : Processor.Module_Array(1 .. Voter_Inputs);
     Voter_Array : Voter.Module_Array(1 .. Voter_Count);
     -- system inputs
@@ -69,21 +69,7 @@ procedure NMR_Simulator is
          Fault_Grade  => Fault_Grade_Voter, 
          Fault_Filter => Fault_Filter_Voter, 
          Operation    => Vote);
-    
-    -- system input generator objects
-    subtype Seed_Range is Integer range 1 .. 5;
-    package Random_Seed is new Ada.Numerics.Discrete_Random(Seed_Range);
-    use Random_Seed;
-    G : Generator;
-    
-    -- system input generator function
-    function Generate return Float is
-        Seed_Values : array (1 .. 5) of Float := (0.8, 0.85, 0.9, 0.95, 1.0);
-    begin
-        Reset(G);
-        return Seed_Values(Random(G));
-    end Generate;
-    
+         
     -- a single cycle of the system
     procedure Cycle is
     begin
@@ -101,25 +87,21 @@ procedure NMR_Simulator is
     end Status;
     -- simulator object
     package NMR_Sim is new Simulator
-        (Cycle_Limit => Clock,
-         System_Inputs => Inputs,
-         Input_Generator => Generate,
-         Cycle => Cycle,
-         Status => Status);
+        (Cycle_Limit     => Clock,
+         System_Inputs   => Inputs,
+         Input_Range     => (0.8, 0.85, 0.9, 0.95, 1.0),
+         Cycle           => Cycle,
+         Status          => Status);
 begin
-    -- init float pointers
-    Processor.Init_Array(Proc_Array);
-    Voter.Init_Array(Voter_Array);
+    -- init group outputs (float accesses)
+    Proc_Group.Init_Group;
+    Voter_Group.Init_Group;
     Init_Array(Inputs);
     
-    -- system inputs to processors
-    Proc_Group.Bind_To(Inputs, 1);
-    
-    -- bind all processors to each voter
-    for Vtr of Voter_Array
-    loop
-        Proc_Group.Bind_From(Vtr.Input);
-    end loop;
+    -- bind system inputs to processors
+    Proc_Group.Bind_Array(Inputs, 1);
+    -- bind all processors to every voter
+    Voter_Group.Bind_Multi(Proc_Group.Outputs, 1);
     
     -- let it rip
     NMR_Sim.Run_Simulator;

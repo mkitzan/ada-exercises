@@ -1,6 +1,16 @@
 with Ada.Text_IO, Ada.Numerics.Float_Random, Units; use Ada.Text_IO, Ada.Numerics.Float_Random, Units;
 
 package body Module.Group is
+    procedure Init_Group is
+    begin
+        for I in 1 .. Module_Group'Length
+        loop
+            Module_Group(I).Output     := new Float;
+            Module_Group(I).Output.all := 0.0000;
+            Outputs(I)                 := Module_Group(I).Output;
+        end loop;
+    end Init_Group;
+
     procedure Run is 
     begin
         for Component of Module_Group
@@ -35,27 +45,38 @@ package body Module.Group is
     
     procedure Listen is
     begin
-        for Component of Module_Group
+        for Output of Outputs
         loop
-            Put(Component.Output.all'Image & " ");
+            Put(Output.all'Image & " ");
         end loop;
         
         New_Line;
     end Listen;
     
-    procedure Bind_From(To : out Float_Array) is
+    procedure Bind_Single (From : in Float_Access; Position : in Positive) is
     begin
-        for I in 1 .. Module_Group'Length
+        for Component of Module_Group
         loop
-            To(I) := Module_Group(I).Output;
+            Component.Input(Position) :=  From;
         end loop;
-    end Bind_From;
+    end Bind_Single;
     
-    procedure Bind_To(From : in Float_Array; Position : in Positive) is
+    procedure Bind_Array (From : in Float_Array; Position : in Positive) is
     begin
         for I in 1 .. Module_Group'Length
         loop
             Module_Group(I).Input(Position) :=  From(I);
         end loop;
-    end Bind_To;
+    end Bind_Array;
+    
+    procedure Bind_Multi (From : in Float_Array; Position : in Positive) is
+    begin
+        for I in Position .. From'Length
+        loop
+            for Component of Module_Group
+            loop
+                Component.Input(I) := From(I);
+            end loop;
+        end loop;
+    end Bind_Multi;
 end Module.Group;
