@@ -8,7 +8,7 @@ generic
 package Module.Group is
     Outputs : Float_Array (1 .. Module_Group'Length); -- group outputs
 
-    procedure Init_Group; -- initialize modules in group and group outputs
+    procedure Init_Group (Value : in Float); -- initialize modules in group and group outputs
     
     procedure Run;    -- performs "Operation" on every module in group
     procedure Status; -- prints faulty status of each module (true = Faulty)

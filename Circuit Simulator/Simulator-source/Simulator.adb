@@ -15,8 +15,8 @@ package body Simulator is
     begin
         for Input of System_Inputs
         loop
-            Input.all := Input_Range(Random(G));
             Reset(G);
+            Input.all := Input_Range(Random(G));
         end loop;
     end Generate_All;
 end Simulator;

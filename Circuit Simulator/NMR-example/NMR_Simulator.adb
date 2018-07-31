@@ -13,13 +13,13 @@ with Units, Simulator, Module, Module.Group; use Units;
 
 procedure NMR_Simulator is
     Clock        : Positive := 10; -- time steps to simulate
-    Proc_Inputs  : Positive := 1; -- incoming connections to processors
-    Voter_Inputs : Positive := 5; -- incoming connections to voters (== number of processors)
-    Voter_Count  : Positive := 3; -- number of voters in system (every proc connects to every voter)
-    Fault_Filter_Proc   : Float := 0.50; -- filter value over faulty processor output
-    Fault_Filter_Voter  : Float := 0.50; -- filter value over faulty voter output
-    Fault_Grade_Proc  : Float := 0.05; -- probability of processor failure each cycle
-    Fault_Grade_Voter : Float := 0.03; -- probability of voter failure each cycle
+    Proc_Inputs  : Positive := 1;  -- incoming connections to processors
+    Voter_Inputs : Positive := 5;  -- incoming connections to voters (== number of processors)
+    Voter_Count  : Positive := 3;  -- number of voters in system (every proc connects to every voter)
+    Fault_Filter_Proc  : Float := 0.50; -- filter value over faulty processor output
+    Fault_Filter_Voter : Float := 0.50; -- filter value over faulty voter output
+    Fault_Grade_Proc   : Float := 0.05; -- probability of processor failure each cycle
+    Fault_Grade_Voter  : Float := 0.03; -- probability of voter failure each cycle
 
     -- base module packages
     package Processor is new Module(Inputs => Proc_Inputs);
@@ -93,9 +93,9 @@ procedure NMR_Simulator is
          Cycle           => Cycle,
          Status          => Status);
 begin
-    -- init group outputs (float accesses)
-    Proc_Group.Init_Group;
-    Voter_Group.Init_Group;
+    -- init group outputs
+    Proc_Group.Init_Group(Value => 0.00);
+    Voter_Group.Init_Group(Value => 0.00);
     Init_Array(Inputs);
     
     -- bind system inputs to processors

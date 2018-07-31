@@ -11,5 +11,6 @@ package Module is
     
     type Module_Array is array (Positive range <>) of Module;
     
-    procedure Init_Module (Component  : in out Module);
+    -- initialize a single module
+    procedure Init_Module (Component  : in out Module; Value : in Float);
 end Module;

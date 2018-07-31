@@ -1,13 +1,13 @@
 with Ada.Text_IO, Ada.Numerics.Float_Random, Units; use Ada.Text_IO, Ada.Numerics.Float_Random, Units;
 
 package body Module.Group is
-    procedure Init_Group is
+    procedure Init_Group (Value : in Float) is
     begin
         for I in 1 .. Module_Group'Length
         loop
             Module_Group(I).Output     := new Float;
-            Module_Group(I).Output.all := 0.0000;
-            Outputs(I)                 := Module_Group(I).Output;
+            Module_Group(I).Output.all := Value;
+            Outputs(I) := Module_Group(I).Output;
         end loop;
     end Init_Group;
 
@@ -63,7 +63,7 @@ package body Module.Group is
     
     procedure Bind_Array (From : in Float_Array; Position : in Positive) is
     begin
-        for I in 1 .. Module_Group'Length
+        for I in 1 .. From'Length
         loop
             Module_Group(I).Input(Position) :=  From(I);
         end loop;

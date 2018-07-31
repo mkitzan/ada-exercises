@@ -7,6 +7,7 @@ generic
     with procedure Cycle;
     with procedure Status;
 package Simulator is
+    -- run simulation until cycle_limit is reached
     procedure Run_Simulator;
 private
     subtype Random_Range is Positive range Input_Range'First .. Input_Range'Last;
