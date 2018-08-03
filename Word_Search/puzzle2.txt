@@ -1,0 +1,12 @@
+10
+rich
+abcdefghij
+klmnopqrst
+uvwxyzrics
+abcdefghij
+klmnopqrst
+uvwxyzabcd
+efghijklmn
+opqrstuvwx
+yzabcdefgh
+ijklmnopqr
