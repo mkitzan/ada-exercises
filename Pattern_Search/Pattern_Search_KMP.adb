@@ -1,4 +1,3 @@
-with Ada.Text_IO; use Ada.Text_IO;
 
 package body Pattern_Search_KMP is
     function Search (Text, Pattern : in String) return Positive is
