@@ -1,5 +1,5 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Pattern_Search_KMP, Pattern_Search_BM;
+with Pattern_Search_KMP, Pattern_Search_BM, Pattern_Search_RK;
 
 
 procedure DFA_Test is
@@ -17,6 +17,13 @@ begin
     Put_Line(Pattern);
     
     N := Pattern_Search_BM.Search(Text => Text, Pattern => Pattern);
+    for I in 1 .. N
+    loop
+        Put(' ');
+    end loop;
+    Put_Line(Pattern);
+    
+    N := Pattern_Search_RK.Search(Text => Text, Pattern => Pattern, Prime => 2357);
     for I in 1 .. N
     loop
         Put(' ');
