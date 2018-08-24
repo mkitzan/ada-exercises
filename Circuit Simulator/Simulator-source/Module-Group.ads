@@ -2,6 +2,7 @@ with Ada.Numerics.Float_Random, Units; use Ada.Numerics.Float_Random, Units;
 
 generic
     Module_Group : in out Module_Array;
+    Repair_Time  : in Integer;
     Fault_Grade  : in Float;
     Fault_Filter : in Float;
     with procedure Operation(Component : in out Module);

@@ -3,13 +3,15 @@ with Units, Simulator, Module, Module.Group; use Units;
 
 procedure Flux_Summing is
     Clock              : Positive := 25; -- time steps to simulate
-    Processor_Inputs   : Positive := 2; -- incoming connections to processors
-    Transformer_Inputs : Positive := 3; -- incoming connections to transformer (== number of processors)
-    Actuator_Inputs    : Positive := 1; -- incoming connections to the actuator
-    Fault_Filter_Proc  : Float := 0.00; -- filter value over faulty processor output
-    Fault_Filter_None  : Float := 0.00; -- filter value over faulty module output
-    Fault_Grade_Proc   : Float := 0.03; -- probability of processor failure each cycle
-    Fault_Grade_None   : Float := 0.00; -- probability of module failure each cycle
+    Processor_Inputs   : Positive := 2;  -- incoming connections to processors
+    Transformer_Inputs : Positive := 3;  -- incoming connections to transformer (== number of processors)
+    Actuator_Inputs    : Positive := 1;  -- incoming connections to the actuator
+    Repair_Time_Proc   : Integer := 3;  -- clock cycles until faulty component is repaired
+    Repair_Time_None   : Integer := 0;
+    Fault_Filter_Proc  : Float := 0.00;  -- filter value over faulty processor output
+    Fault_Filter_None  : Float := 0.00;  -- filter value over faulty module output
+    Fault_Grade_Proc   : Float := 0.025; -- probability of processor failure each cycle
+    Fault_Grade_None   : Float := 0.00;  -- probability of module failure each cycle
 
     -- base module packages
     package Processor   is new Module (Inputs => Processor_Inputs);
@@ -27,17 +29,18 @@ procedure Flux_Summing is
         -- Output = given input * (previous output / actuator feedback)
         Component.Output.all := Component.Input(1).all * (Component.Output.all / Component.Input(2).all);
     end Process;
+    
     -- transformer operation
     procedure Transform (Component : in out Transformer.Module) is
     begin
         Component.Output.all := 0.00;
-        
         -- sum transformer's inputs into single output
         for Value of Component.Input
         loop
             Component.Output.all := Component.Output.all + Value.all;
         end loop;
     end Transform;
+    
     -- actuator operation
     procedure Actuate (Component : in out Actuator.Module) is
     begin
@@ -48,16 +51,19 @@ procedure Flux_Summing is
     -- create module groups
     package Processor_Group is new Processor.Group
         (Module_Group => Processor_Array, 
+         Repair_Time  => Repair_Time_Proc, 
          Fault_Grade  => Fault_Grade_Proc, 
          Fault_Filter => Fault_Filter_Proc, 
          Operation    => Process);
     package Transformer_Group is new Transformer.Group
-        (Module_Group => Transformer_Array, 
+        (Module_Group => Transformer_Array,
+         Repair_Time  => Repair_Time_None,
          Fault_Grade  => Fault_Grade_None, 
          Fault_Filter => Fault_Filter_None, 
          Operation    => Transform);
     package Actuator_Group is new Actuator.Group
         (Module_Group => Actuator_Array, 
+         Repair_Time  => Repair_Time_None, 
          Fault_Grade  => Fault_Grade_None, 
          Fault_Filter => Fault_Filter_None, 
          Operation    => Actuate);
@@ -70,6 +76,7 @@ procedure Flux_Summing is
         Transformer_Group.Run; -- votes on processor output
         Actuator_Group.Run;
     end Cycle;
+    
     -- system status survey
     procedure Status is
     begin
@@ -77,6 +84,7 @@ procedure Flux_Summing is
         New_Line;
         Processor_Group.Status;  -- prints processor fault status post cycle
     end Status;
+    
     -- simulator object
     package Flux_Sim is new Simulator
         (Cycle_Limit     => Clock,

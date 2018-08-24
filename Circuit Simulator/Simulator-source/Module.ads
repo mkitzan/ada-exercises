@@ -7,6 +7,7 @@ package Module is
         Faulty : Boolean := False;
         Input  : Float_Array(1 .. Inputs);
         Output : Float_Access;
+        Repair : Integer := 0;
     end record;
     
     type Module_Array is array (Positive range <>) of Module;

@@ -16,6 +16,8 @@ procedure NMR_Simulator is
     Proc_Inputs  : Positive := 1;  -- incoming connections to processors
     Voter_Inputs : Positive := 5;  -- incoming connections to voters (== number of processors)
     Voter_Count  : Positive := 3;  -- number of voters in system (every proc connects to every voter)
+    Repair_Time_Proc   : Integer := 5; -- number of clock cycles until processor repaired from faulty state
+    Repair_Time_Voter  : Integer := 3; -- number of clock cycles until voter repaired from faulty state
     Fault_Filter_Proc  : Float := 0.50; -- filter value over faulty processor output
     Fault_Filter_Voter : Float := 0.50; -- filter value over faulty voter output
     Fault_Grade_Proc   : Float := 0.05; -- probability of processor failure each cycle
@@ -61,11 +63,13 @@ procedure NMR_Simulator is
     -- create module groups
     package Proc_Group is new Processor.Group
         (Module_Group => Proc_Array, 
+         Repair_Time  => Repair_Time_Proc,
          Fault_Grade  => Fault_Grade_Proc, 
          Fault_Filter => Fault_Filter_Proc, 
          Operation    => Process);
     package Voter_Group is new Voter.Group
         (Module_Group => Voter_Array, 
+         Repair_Time  => Repair_Time_Voter,
          Fault_Grade  => Fault_Grade_Voter, 
          Fault_Filter => Fault_Filter_Voter, 
          Operation    => Vote);

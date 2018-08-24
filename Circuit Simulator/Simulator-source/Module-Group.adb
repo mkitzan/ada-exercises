@@ -24,6 +24,13 @@ package body Module.Group is
     begin
         if Component.Faulty then
             Component.Output.all := Component.Output.all * Fault_Filter;
+            
+            if Component.Repair = Repair_Time then
+                Component.Repair := 0;
+                Component.Faulty := False;
+            else
+                Component.Repair := Component.Repair + 1;
+            end if;
         else
             if Random(G) < Fault_Grade then
                 Component.Faulty := True;
