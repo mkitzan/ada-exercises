@@ -108,5 +108,5 @@ begin
     Voter_Group.Bind_Multi(Proc_Group.Outputs, 1);
     
     -- let it rip
-    NMR_Sim.Run_Simulator;
+    NMR_Sim.Simulate;
 end NMR_Simulator;

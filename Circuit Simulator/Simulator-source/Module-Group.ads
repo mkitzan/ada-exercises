@@ -2,9 +2,9 @@ with Ada.Numerics.Float_Random, Units; use Ada.Numerics.Float_Random, Units;
 
 generic
     Module_Group : in out Module_Array;
-    Repair_Time  : in Integer;
-    Fault_Grade  : in Float;
-    Fault_Filter : in Float;
+    Repair_Time  : in Integer := 0;
+    Fault_Grade  : in Float   := 0.00;
+    Fault_Filter : in Float   := 0.00;
     with procedure Operation(Component : in out Module);
 package Module.Group is
     Outputs : Float_Array (1 .. Module_Group'Length); -- group outputs

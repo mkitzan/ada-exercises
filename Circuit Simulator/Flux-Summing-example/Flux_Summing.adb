@@ -7,11 +7,8 @@ procedure Flux_Summing is
     Transformer_Inputs : Positive := 3;  -- incoming connections to transformer (== number of processors)
     Actuator_Inputs    : Positive := 1;  -- incoming connections to the actuator
     Repair_Time_Proc   : Integer := 3;  -- clock cycles until faulty component is repaired
-    Repair_Time_None   : Integer := 0;
     Fault_Filter_Proc  : Float := 0.00;  -- filter value over faulty processor output
-    Fault_Filter_None  : Float := 0.00;  -- filter value over faulty module output
     Fault_Grade_Proc   : Float := 0.025; -- probability of processor failure each cycle
-    Fault_Grade_None   : Float := 0.00;  -- probability of module failure each cycle
 
     -- base module packages
     package Processor   is new Module (Inputs => Processor_Inputs);
@@ -55,26 +52,22 @@ procedure Flux_Summing is
          Fault_Grade  => Fault_Grade_Proc, 
          Fault_Filter => Fault_Filter_Proc, 
          Operation    => Process);
+         
     package Transformer_Group is new Transformer.Group
         (Module_Group => Transformer_Array,
-         Repair_Time  => Repair_Time_None,
-         Fault_Grade  => Fault_Grade_None, 
-         Fault_Filter => Fault_Filter_None, 
          Operation    => Transform);
+         
     package Actuator_Group is new Actuator.Group
-        (Module_Group => Actuator_Array, 
-         Repair_Time  => Repair_Time_None, 
-         Fault_Grade  => Fault_Grade_None, 
-         Fault_Filter => Fault_Filter_None, 
+        (Module_Group => Actuator_Array,
          Operation    => Actuate);
          
     -- a single cycle of the system
     procedure Cycle is
     begin
         -- simulator automatically generates new vlaues for system inputs
-        Processor_Group.Run;  -- process new input
+        Processor_Group.Run;   -- process new input
         Transformer_Group.Run; -- votes on processor output
-        Actuator_Group.Run;
+        Actuator_Group.Run;    -- process actuator input (div by processors)
     end Cycle;
     
     -- system status survey
@@ -89,7 +82,7 @@ procedure Flux_Summing is
     package Flux_Sim is new Simulator
         (Cycle_Limit     => Clock,
          System_Inputs   => Inputs,
-         Input_Range     => (0.3313, 0.3323, 0.3333, 0.3343, 0.3353),
+         Input_Range     => (0.331, 0.332, 0.333, 0.334, 0.335),
          Cycle           => Cycle,
          Status          => Status);
 begin
@@ -109,5 +102,5 @@ begin
     Processor_Group.Bind_Single(Actuator_Group.Outputs(1), 2);
     
     -- let it rip
-    Flux_Sim.Run_Simulator;
+    Flux_Sim.Simulate;
 end Flux_Summing;

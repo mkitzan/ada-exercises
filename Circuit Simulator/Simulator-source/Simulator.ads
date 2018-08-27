@@ -8,7 +8,7 @@ generic
     with procedure Status;
 package Simulator is
     -- run simulation until cycle_limit is reached
-    procedure Run_Simulator;
+    procedure Simulate;
 private
     subtype Random_Range is Positive range Input_Range'First .. Input_Range'Last;
     package Random_Input is new Ada.Numerics.Discrete_Random(Random_Range);

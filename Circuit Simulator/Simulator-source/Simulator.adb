@@ -1,7 +1,7 @@
 with Units; use Units;
 
 package body Simulator is
-    procedure Run_Simulator is
+    procedure Simulate is
     begin
         for I in 1 .. Cycle_Limit
         loop
@@ -9,7 +9,7 @@ package body Simulator is
             Cycle;
             Status;
         end loop;
-    end Run_Simulator;
+    end Simulate;
     
     procedure Generate_All is
     begin
