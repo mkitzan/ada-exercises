@@ -1,33 +1,33 @@
 
-package body Leagues is
-	function New_League(Name : Name_String) return League is
-		L : League;
+package body Hockey.League is
+	function New_League(Name : String) return League_T is
+		L : League_T;
 	begin
-		L.Name := Name;
-		return l;
+		L.Name := To_Unbounded_String(Name);
+		return L;
 	end New_League;
 	
 	
-	function Get_Name(L : in League) return Name_String is
+	function Get_Name(L : in League_T) return String is
 	begin
-		return L.Name;
+		return To_String(L.Name);
 	end Get_Name;
 	
 	
-	function Get_Size(L : in League) return Natural is
+	function Get_Size(L : in League_T) return Natural is
 	begin
-		return L.Size;
+		return L.Size - 1;
 	end Get_Size;
 	
 	
-	procedure Add_Team(L : out League; T : in Team) is
+	procedure Add_Team(L : out League_T; T : in Team_T) is
 	begin
 		L.Teams(L.Size) := T;
 		L.Size := L.Size + 1;
 	end Add_Team;
 	
 	
-	function  Remove_Team(L : in out League; Name : in Name_String) return Boolean is
+	function  Remove_Team(L : in out League_T; Name : in String) return Boolean is
 		Found : Boolean := False;
 	begin
 		for I in 1 .. L.Size
@@ -46,4 +46,4 @@ package body Leagues is
 		
 		return Found;
 	end Remove_Team;
-end Leagues;
+end Hockey.League;
