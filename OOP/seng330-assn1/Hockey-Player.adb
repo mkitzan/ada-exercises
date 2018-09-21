@@ -1,7 +1,9 @@
 
 package body Hockey.Player is
-	function New_Player(Name : in String; Points : in Natural; Role : in Position) return Player_T is
-		P : Player_T := Player_T'(Name => To_Unbounded_String(Name), Points => Points, Role => Role);
+	function New_Player(Name : in String; Points : in Natural; Position : in Role) return Player_T is
+		P : Player_T := Player_T'(Name => To_Unbounded_String(Name), 
+							      Points => Points, 
+								  Position => Position);
 	begin
 		return P;
 	end New_Player;

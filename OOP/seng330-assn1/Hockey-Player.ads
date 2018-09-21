@@ -4,7 +4,7 @@ package Hockey.Player is
 	type Player_Array is array (Positive range <>) of Player_T;
 	
 	-- constructors
-	function New_Player(Name : in String; Points : in Natural; Role : in Position) return Player_T;
+	function New_Player(Name : in String; Points : in Natural; Position : in Role) return Player_T;
 	
 	-- getters
 	function Get_Name(P : in Player_T)   return String;
@@ -17,8 +17,8 @@ package Hockey.Player is
 private
 	type Player_T is tagged
 	record
-		Name   : Unbounded_String;
-		Points : Natural := 0;
-		Role   : Position;
+		Name     : Unbounded_String;
+		Points   : Natural := 0;
+		Position : Role;
 	end record;
 end Hockey.Player;

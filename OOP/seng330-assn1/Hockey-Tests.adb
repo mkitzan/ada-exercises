@@ -1,9 +1,9 @@
 
 package body Hockey.Tests is
 	procedure Test_Player_Constructor is
-		P : Player_T := New_Player(Name   => "McDavid", 
-								   Points => 108, 
-								   Role   => Position'(CENTER));
+		P : Player_T := New_Player(Name     => "McDavid", 
+								   Points   => 108, 
+								   Position => Role'(CENTER));
 	begin
 		Assert(Get_Name(P) = "McDavid" and Get_Points(P) = 108);
 		Put_Line("Player constructor passed");
@@ -28,15 +28,15 @@ package body Hockey.Tests is
 	
 	procedure Test_Team_Add is
 		T  : Team_T   := New_Team("Oilers");
-		P1 : Player_T := New_Player(Name   => "McDavid", 
-								    Points => 108, 
-								    Role   => Position'(CENTER));
-		P2 : Player_T := New_Player(Name   => "Draisaitl", 
-								    Points => 70, 
-								    Role   => Position'(CENTER));
-		P3 : Player_T := New_Player(Name   => "Talbot", 
-									Points => 0,
-								    Role   => Position'(GOALTENDER));
+		P1 : Player_T := New_Player(Name     => "McDavid", 
+								    Points   => 108, 
+								    Position => Role'(CENTER));
+		P2 : Player_T := New_Player(Name     => "Draisaitl", 
+								    Points   => 70, 
+								    Position => Role'(CENTER));
+		P3 : Player_T := New_Player(Name     => "Talbot", 
+									Points   => 0,
+								    Position => Role'(GOALTENDER));
 	begin
 		Add_Player(T => T, P => P1);
 		Add_Player(T => T, P => P2);
@@ -64,15 +64,15 @@ package body Hockey.Tests is
 	
 	procedure Test_Team_Remove is
 		T  : Team_T   := New_Team("Oilers");
-		P1 : Player_T := New_Player(Name   => "McDavid", 
-								    Points => 108, 
-								    Role   => Position'(CENTER));
-		P2 : Player_T := New_Player(Name   => "Draisaitl", 
-								    Points => 70, 
-								    Role   => Position'(CENTER));
-		P3 : Player_T := New_Player(Name   => "Talbot", 
-									Points => 0,
-								    Role   => Position'(GOALTENDER));
+		P1 : Player_T := New_Player(Name     => "McDavid", 
+								    Points   => 108, 
+								    Position => Role'(CENTER));
+		P2 : Player_T := New_Player(Name     => "Draisaitl", 
+								    Points   => 70, 
+								    Position => Role'(CENTER));
+		P3 : Player_T := New_Player(Name     => "Talbot", 
+									Points   => 0,
+								    Position => Role'(GOALTENDER));
 	begin
 		Add_Player(T => T, P => P1);
 		Add_Player(T => T, P => P2);
@@ -93,15 +93,15 @@ package body Hockey.Tests is
 	
 	procedure Test_Team_Remove_Missing is
 		T  : Team_T   := New_Team("Oilers");
-		P1 : Player_T := New_Player(Name   => "McDavid", 
-								    Points => 108, 
-								    Role   => Position'(CENTER));
-		P2 : Player_T := New_Player(Name   => "Draisaitl", 
-								    Points => 70, 
-								    Role   => Position'(CENTER));
-		P3 : Player_T := New_Player(Name   => "Talbot", 
-									Points => 0,
-								    Role   => Position'(GOALTENDER));
+		P1 : Player_T := New_Player(Name     => "McDavid", 
+								    Points   => 108, 
+								    Position => Role'(CENTER));
+		P2 : Player_T := New_Player(Name     => "Draisaitl", 
+								    Points   => 70, 
+								    Position => Role'(CENTER));
+		P3 : Player_T := New_Player(Name     => "Talbot", 
+									Points   => 0,
+								    Position => Role'(GOALTENDER));
 	begin
 		Add_Player(T => T, P => P1);
 		Add_Player(T => T, P => P2);
