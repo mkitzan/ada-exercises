@@ -11,7 +11,12 @@ package Hockey.Tests is
 	procedure Test_League_Add;
 	
 	procedure Test_Team_Remove;
+	procedure Test_Team_Remove_Empty;
+	procedure Test_Team_Remove_Missing;
+	
 	procedure Test_League_Remove;
+	procedure Test_League_Remove_Empty;
+	procedure Test_League_Remove_Missing;
 	
 	procedure Test_All;
 end Hockey.Tests;

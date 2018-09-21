@@ -48,13 +48,11 @@ package body Hockey.Team is
 				-- shuffle down values to overwrite removed player
 				T.Players(I-1) := T.Players(I);
 			elsif Get_Name(T.Players(I)) = Name then
-				-- key player found
+				-- key player found, adjust team's size
 				Found := True;
+				T.Size := T.Size - 1;
 			end if;
 		end loop;
-		
-		-- adjust team's size
-		T.Size := T.Size - 1;
 		
 		return Found;
 	end Remove_Player;

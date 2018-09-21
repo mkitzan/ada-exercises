@@ -36,13 +36,11 @@ package body Hockey.League is
 				-- shuffle down values to overwrite removed team
 				L.Teams(I-1) := L.Teams(I);
 			elsif Get_Name(L.Teams(I)) = Name then
-				-- key team found
+				-- key team found, adjust league's size
 				Found := True;
+				L.Size := L.Size - 1;
 			end if;
 		end loop;
-		
-		-- adjust league's size
-		L.Size := L.Size - 1;
 		
 		return Found;
 	end Remove_Team;
