@@ -34,26 +34,26 @@ package body Hockey.Team is
 	
 	procedure Add_Player(T : out Team_T; P : in Player_T) is
 	begin
-        T.Players(T.Size) := P;
-        T.Size := T.Size + 1;
-    end Add_Player;
-    
-    
-    function  Remove_Player(T : in out Team_T; Name : in String) return Boolean is
-        Found : Boolean := False;
-    begin
-        for I in 1 .. T.Size
-        loop
-            if Found then
-                -- shuffle down values to overwrite removed player
-                T.Players(I-1) := T.Players(I);
-            elsif Get_Name(T.Players(I)) = Name then
-                -- key player found, adjust team's size
-                Found := True;
-                T.Size := T.Size - 1;
-            end if;
-        end loop;
-        
-        return Found;
-    end Remove_Player;
+		T.Players(T.Size) := P;
+		T.Size := T.Size + 1;
+	end Add_Player;
+	
+	
+	function  Remove_Player(T : in out Team_T; Name : in String) return Boolean is
+		Found : Boolean := False;
+	begin
+		for I in 1 .. T.Size
+		loop
+			if Found then
+				-- shuffle down values to overwrite removed player
+				T.Players(I-1) := T.Players(I);
+			elsif Get_Name(T.Players(I)) = Name then
+				-- key player found, adjust team's size
+				Found := True;
+				T.Size := T.Size - 1;
+			end if;
+		end loop;
+		
+		return Found;
+	end Remove_Player;
 end Hockey.Team;
